@@ -5,13 +5,15 @@
  */
 package com.ynz.optimizer.repository;
 
-import com.ynz.optimizer.model.User;
+import com.ynz.optimizer.model.Client;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author YNZ
  */
-public interface UserRepository extends CrudRepository<User, Long> {
-    
+public interface UserRepository extends CrudRepository<Client, Long> {
+
+    Client findByUserName(String userName);
+
 }

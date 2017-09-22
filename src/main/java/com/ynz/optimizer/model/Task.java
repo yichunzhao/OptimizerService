@@ -1,16 +1,14 @@
 /*
-
-# task
-{
-    "task": # ASCII string
-    "status": # one of "submitted", "started", "completed"
-    "timestamps": {
-        "submitted": # unix/epoch time
-        "started": # unix/epoch time or null if not started
-        "completed": # unix/epoch time or null if not completed
-    }
-}
- 
+ *# task
+ *{
+ *   "task": # ASCII string
+ *   "status": # one of "submitted", "started", "completed"
+ *   "timestamps": {
+ *       "submitted": # unix/epoch time
+ *       "started": # unix/epoch time or null if not started
+ *       "completed": # unix/epoch time or null if not completed
+ *   }
+ *}
  */
 package com.ynz.optimizer.model;
 
