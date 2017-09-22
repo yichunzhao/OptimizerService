@@ -65,7 +65,7 @@ public class Knapsack {
         return result;
     }
 
-    public List<Integer> calculate(int[] weights, int[] values, int knapsackWeight) {
+    public List<Integer> calculate(int[] weights, int[] values, int knapsackWeight) throws IllegalArgumentException {
         if (weights.length != values.length) {
             throw new IllegalArgumentException("weights and values should have the same length");
         }
@@ -89,8 +89,10 @@ public class Knapsack {
         return selected;
     }
 
-    public int[] calculate(Problem problem) {
+    public int[] calculate(Problem problem) throws IllegalArgumentException {
+        
         List<Integer> list = this.calculate(problem.getWeights(), problem.getValues(), problem.getCapacity());
+        
         int[] tmp = new int[list.size()];
 
         for (int i = 0; i < tmp.length; i++) {

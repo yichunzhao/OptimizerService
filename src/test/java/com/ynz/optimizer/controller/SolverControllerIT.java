@@ -6,7 +6,6 @@
 package com.ynz.optimizer.controller;
 
 import com.ynz.optimizer.model.Problem;
-import static org.hamcrest.CoreMatchers.is;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +16,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 /**
  *
@@ -53,11 +52,16 @@ public class SolverControllerIT {
         
         this.mvc.perform(post(PATH_CREATE)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(problem))).andExpect(status().isAccepted())
+                .content(asJsonString(problem)))
+                .andDo(print())
+                .andExpect(status().isAccepted())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(content().string(containsString("time")))
-                .andExpect(content().string(containsString("problem")))
-                .andExpect(content().string(containsString("[2,3,5]")));
+                .andExpect(content().string(containsString("timestamps")))
+                .andExpect(content().string(containsString("status")));
+                
+                //.andExpect(content().string(containsString("time")))
+                //.andExpect(content().string(containsString("problem")))
+                //.andExpect(content().string(containsString("[2,3,5]")));
                 //.andExpect(jsonPath("$.items", is(expected)));
                 //.andExpect(jsonPath("$.lastName", is("Zhao")));
     }

@@ -13,12 +13,15 @@
  */
 package com.ynz.optimizer.model;
 
+import javax.persistence.Embeddable;
 import lombok.Data;
 
 /**
  *
  * @author YNZ
  */
+
+@Embeddable
 @Data
 public class Problem {
 

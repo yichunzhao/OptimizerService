@@ -10,9 +10,12 @@ import com.ynz.optimizer.model.Solution;
 import com.ynz.optimizer.model.Status;
 import com.ynz.optimizer.model.Task;
 import com.ynz.optimizer.model.Timestamps;
+import com.ynz.optimizer.repository.TaskRepository;
 import com.ynz.optimizer.util.Knapsack;
 import java.sql.Timestamp;
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,26 +31,45 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SolverController {
 
+    final private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    private TaskRepository taskRepository;
+
     @RequestMapping(value = "/knapsack/tasks", method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Problem problem) {
-        Knapsack ks = new Knapsack();
 
         //create a task
         Task task = new Task();
         task.setStatus(Status.SUBMITTED);
         task.setTask("my task");
-        
+
         //time stamp
         Timestamps timestamps = new Timestamps();
         timestamps.setSubmitted(new Timestamp(System.currentTimeMillis()));
         task.setTimestamps(timestamps);
 
-        int[] items = ks.calculate(problem); 
-        
-        Solution solution = new Solution();
-        solution.setItems(items);
-        
-        return new ResponseEntity(solution, HttpStatus.ACCEPTED);
+        //set a problem
+        //spawn a new thread to solve the problem
+        new Thread(() -> {
+            timestamps.setStarted(new Timestamp(System.currentTimeMillis()));
+            task.setStatus(Status.STARTED);
+            //need a new thread to do calculation
+            Knapsack ks = new Knapsack();
+            int[] items = ks.calculate(problem);
+            timestamps.setCompleted(new Timestamp(System.currentTimeMillis()));
+            //now we have a sloution
+            Solution solution = new Solution();
+            solution.setItems(items);
+            
+            
+            task.setStatus(Status.COMPLETED);
+            
+            //keep task and solution in the database. 
+        }
+        ).start();
+
+        return new ResponseEntity(task, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/knapsack/admin/shutdown", method = RequestMethod.POST)
