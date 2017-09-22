@@ -5,6 +5,7 @@
  */
 package com.ynz.optimizer.util;
 
+import com.ynz.optimizer.model.Problem;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +87,17 @@ public class Knapsack {
 //        System.out.println("w : " + Arrays.toString(w));
 //        System.out.println("v : " + Arrays.toString(v));
         return selected;
+    }
+
+    public int[] calculate(Problem problem) {
+        List<Integer> list = this.calculate(problem.getWeights(), problem.getValues(), problem.getCapacity());
+        int[] tmp = new int[list.size()];
+
+        for (int i = 0; i < tmp.length; i++) {
+            tmp[i] = list.get(i);
+        }
+
+        return tmp;
     }
 
     public static void main(String[] args) {

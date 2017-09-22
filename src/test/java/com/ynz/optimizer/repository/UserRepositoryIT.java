@@ -11,8 +11,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@Transactional
 public class UserRepositoryIT {
 
     @Autowired
@@ -32,7 +33,6 @@ public class UserRepositoryIT {
     }
 
     @Test
-    @Rollback
     public void testSave() {
         Client added = repository.save(user);
         Client found = repository.findOne(added.getId());
@@ -40,7 +40,6 @@ public class UserRepositoryIT {
     }
     
     @Test
-    @Rollback
     public void testFindByUserName(){
         repository.save(user);
         Client found = repository.findByUserName(user.getUserName());

@@ -20,19 +20,19 @@ import lombok.Data;
  *
  * @author YNZ
  */
-
 @Data
 public class Solution implements Serializable {
-    
+
     private int[] items;
-    
-    private int time; 
+    private int time;
+    private Problem problem;
 
     public Solution() {
     }
 
-    public Solution(int[] items, int time) {
+    public Solution(int[] items, int time, Problem problem) {
         this.items = items;
         this.time = time;
+        this.problem = problem;
     }
 }

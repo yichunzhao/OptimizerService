@@ -19,13 +19,16 @@ import lombok.Data;
  *
  * @author YNZ
  */
-
 @Data
 public class Problem {
-    
+
     private int capacity;
     private int[] weights;
     private int[] values;
+
+    public Problem() {
+
+    }
 
     public Problem(int capacity, int[] weights, int[] values) {
         this.capacity = capacity;
