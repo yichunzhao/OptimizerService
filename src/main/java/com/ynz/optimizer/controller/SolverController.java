@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +42,7 @@ public class SolverController {
     @Autowired
     private SolutionRepository solutionRepository;
 
-    @RequestMapping(value = "/knapsack/tasks", method = RequestMethod.POST)
+    @RequestMapping(value = "/knapsack/tasks", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity create(@RequestBody Problem problem) {
 
         //create a task
@@ -60,10 +61,13 @@ public class SolverController {
         //set a problem
         //spawn a new thread to solve the problem
         new Thread(() -> {
+            logger.info("start a new thread to calculate");
             timestamps.setStarted(new Timestamp(System.currentTimeMillis()));
             task.setStatus(Status.STARTED);
             //need a new thread to do calculation
             Knapsack ks = new Knapsack();
+
+            logger.info("problem : " + problem.toString());
             int[] items = ks.calculate(problem);
             timestamps.setCompleted(new Timestamp(System.currentTimeMillis()));
             //now we have a sloution
@@ -79,6 +83,8 @@ public class SolverController {
             //keep task and solution in the database. 
             solutionRepository.save(solution);
             taskRepository.save(task);
+            logger.info("end of thread");
+
         }
         ).start();
 
@@ -91,11 +97,22 @@ public class SolverController {
         return new ResponseEntity("Shut down ", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/knapsack/admin/tasks", method = RequestMethod.GET)
+    @RequestMapping(value = "/knapsack/solutions", method = RequestMethod.GET)
     public ResponseEntity getSolution(
             @RequestParam(value = "id") Long id) {
 
-        return new ResponseEntity("task", HttpStatus.OK);
+        Solution found = solutionRepository.findOne(id);
+
+        return new ResponseEntity(found, HttpStatus.FOUND);
+    }
+
+    @RequestMapping(value = "/knapsack/admin/tasks", method = RequestMethod.GET)
+    public ResponseEntity getTask(
+            @RequestParam(value = "id") Long id) {
+
+        Task found = taskRepository.findOne(id);
+
+        return new ResponseEntity(found, HttpStatus.FOUND);
     }
 
 }
