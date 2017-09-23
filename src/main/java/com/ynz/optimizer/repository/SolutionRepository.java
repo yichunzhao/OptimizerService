@@ -12,6 +12,10 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author YNZ
  */
+
+
 public interface SolutionRepository extends CrudRepository<Solution, Long> {
+
+    Solution findByTask(String task);
 
 }

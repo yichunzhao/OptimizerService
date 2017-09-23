@@ -31,7 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@Transactional
 public class SolverControllerIT {
     
     public static final String PATH_CREATE = "/knapsack/tasks";

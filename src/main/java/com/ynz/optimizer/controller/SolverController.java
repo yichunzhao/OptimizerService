@@ -10,9 +10,11 @@ import com.ynz.optimizer.model.Solution;
 import com.ynz.optimizer.model.Status;
 import com.ynz.optimizer.model.Task;
 import com.ynz.optimizer.model.Timestamps;
+import com.ynz.optimizer.repository.SolutionRepository;
 import com.ynz.optimizer.repository.TaskRepository;
 import com.ynz.optimizer.util.Knapsack;
 import java.sql.Timestamp;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,18 +38,24 @@ public class SolverController {
     @Autowired
     private TaskRepository taskRepository;
 
+    @Autowired
+    private SolutionRepository solutionRepository;
+
     @RequestMapping(value = "/knapsack/tasks", method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Problem problem) {
 
         //create a task
         Task task = new Task();
         task.setStatus(Status.SUBMITTED);
-        task.setTask("my task");
+        task.setTask(UUID.randomUUID().toString());
 
         //time stamp
         Timestamps timestamps = new Timestamps();
         timestamps.setSubmitted(new Timestamp(System.currentTimeMillis()));
         task.setTimestamps(timestamps);
+
+        //save the task in db
+        taskRepository.save(task);
 
         //set a problem
         //spawn a new thread to solve the problem
@@ -60,12 +68,17 @@ public class SolverController {
             timestamps.setCompleted(new Timestamp(System.currentTimeMillis()));
             //now we have a sloution
             Solution solution = new Solution();
+            //solution.setProblem(problem);
             solution.setItems(items);
-            
-            
+            long timeCost = task.getTimestamps().getCompleted().getTime() - task.getTimestamps().getStarted().getTime();
+            solution.setTime((int) timeCost);
+            solution.setTask(task.getTask());
+
             task.setStatus(Status.COMPLETED);
-            
+
             //keep task and solution in the database. 
+            solutionRepository.save(solution);
+            taskRepository.save(task);
         }
         ).start();
 

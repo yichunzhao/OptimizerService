@@ -91,7 +91,7 @@ public class Knapsack {
 
     public int[] calculate(Problem problem) throws IllegalArgumentException {
         
-        List<Integer> list = this.calculate(problem.getWeights(), problem.getValues(), problem.getCapacity());
+        List<Integer> list = this.calculate(problem.getWeights(), problem.getPrices(), problem.getCapacity());
         
         int[] tmp = new int[list.size()];
 

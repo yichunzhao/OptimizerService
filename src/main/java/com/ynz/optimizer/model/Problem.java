@@ -4,7 +4,7 @@
  *   "problem": {
  *        "capacity": # non-negative integer
  *        "weights": # array of non-negative integers
- *        "values": # array of non-negative integers, as many as weights
+ *        "prices": # array of non-negative integers, as many as weights
  *    }
  *}
 
@@ -13,6 +13,8 @@
  */
 package com.ynz.optimizer.model;
 
+import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.Data;
 
@@ -23,11 +25,14 @@ import lombok.Data;
 
 @Embeddable
 @Data
-public class Problem {
-
+public class Problem implements Serializable {
+    
+    
     private int capacity;
+    
     private int[] weights;
-    private int[] values;
+        
+    private int[] prices;
 
     public Problem() {
 
@@ -36,7 +41,7 @@ public class Problem {
     public Problem(int capacity, int[] weights, int[] values) {
         this.capacity = capacity;
         this.weights = weights;
-        this.values = values;
+        this.prices = values;
     }
 
 }
