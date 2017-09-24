@@ -9,11 +9,15 @@ import com.ynz.optimizer.model.Problem;
 import com.ynz.optimizer.model.Solution;
 import com.ynz.optimizer.model.Status;
 import com.ynz.optimizer.model.Task;
+import com.ynz.optimizer.model.Tasks;
+import com.ynz.optimizer.model.Test;
 import com.ynz.optimizer.model.Timestamps;
 import com.ynz.optimizer.repository.SolutionRepository;
 import com.ynz.optimizer.repository.TaskRepository;
 import com.ynz.optimizer.util.Knapsack;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,10 +25,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -42,8 +46,26 @@ public class SolverController {
     @Autowired
     private SolutionRepository solutionRepository;
 
+    @RequestMapping(value = "/knapsack/tasks/test", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity testCreate(@RequestBody Test test) {
+        if (test.getGoal() == null) {
+            return new ResponseEntity("Empty problem", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity(test, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/knapsack/tasks", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity create(@RequestBody Problem problem) {
+        if (problem.getPrices() == null
+                || problem.getWeights() == null
+                || problem.getCapacity() <= 0) {
+            return new ResponseEntity("Empty problem", HttpStatus.BAD_REQUEST);
+        }
+
+        if (problem.getPrices().length != problem.getWeights().length) {
+            return new ResponseEntity("Prices(Values) and Weights should have the same lenght", HttpStatus.BAD_REQUEST);
+        }
 
         //create a task
         Task task = new Task();
@@ -72,7 +94,7 @@ public class SolverController {
             timestamps.setCompleted(new Timestamp(System.currentTimeMillis()));
             //now we have a sloution
             Solution solution = new Solution();
-            //solution.setProblem(problem);
+            solution.setProblem(problem);
             solution.setItems(items);
             long timeCost = task.getTimestamps().getCompleted().getTime() - task.getTimestamps().getStarted().getTime();
             solution.setTime((int) timeCost);
@@ -84,7 +106,6 @@ public class SolverController {
             solutionRepository.save(solution);
             taskRepository.save(task);
             logger.info("end of thread");
-
         }
         ).start();
 
@@ -97,22 +118,36 @@ public class SolverController {
         return new ResponseEntity("Shut down ", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/knapsack/solutions", method = RequestMethod.GET)
+    @RequestMapping(value = "/knapsack/solutions/{id}", method = RequestMethod.GET)
     public ResponseEntity getSolution(
-            @RequestParam(value = "id") Long id) {
+            @PathVariable("id") Long id) {
 
         Solution found = solutionRepository.findOne(id);
+
+        if (found == null) {
+            return new ResponseEntity("not existed", HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity(found, HttpStatus.FOUND);
     }
 
     @RequestMapping(value = "/knapsack/admin/tasks", method = RequestMethod.GET)
-    public ResponseEntity getTask(
-            @RequestParam(value = "id") Long id) {
-
-        Task found = taskRepository.findOne(id);
-
-        return new ResponseEntity(found, HttpStatus.FOUND);
+    public ResponseEntity getTask() {
+        Tasks tasks = new Tasks();
+        
+        List<Task> startedTasks = new ArrayList<>();
+        taskRepository.findByStatus(Status.STARTED).forEach(startedTasks::add);
+        tasks.setStarted(startedTasks);
+        
+        List<Task> submittedTasks = new ArrayList<>();
+        taskRepository.findByStatus(Status.STARTED).forEach(submittedTasks::add);
+        tasks.setStarted(submittedTasks);
+        
+        List<Task> completedTasks = new ArrayList<>();
+        taskRepository.findByStatus(Status.STARTED).forEach(completedTasks::add);
+        tasks.setStarted(completedTasks);
+                
+        return new ResponseEntity(tasks, HttpStatus.FOUND);
     }
 
 }

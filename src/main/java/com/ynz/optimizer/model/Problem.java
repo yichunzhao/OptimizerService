@@ -27,7 +27,6 @@ import lombok.Data;
 @Data
 public class Problem implements Serializable {
     
-    
     private int capacity;
     
     private int[] weights;
