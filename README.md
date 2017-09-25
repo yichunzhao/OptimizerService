@@ -19,7 +19,7 @@ User post its task via API. System feedback a htttp accepted status, meanwhile s
 
 ## Deployment
 Cloud: https://knapsacksolver.herokuapp.com/   
-Project jar file is deployed on the Cloud via Heroku CLI using github. 
+Project jar file is deployed on the Cloud via Heroku CLI using git command. 
 
 or 
 Local: http://localhost:8080
