@@ -1,28 +1,32 @@
 # OptimizerService
 
 ## Problem
-This project is going to build a Rest-API for solving knacksnack problem. The job is carried out in an asynchronouse communication.
+The project is to build a Rest-API for solving knacksnack problem. The job is carried out in an asynchronouse communication.
 It means that a client may post its task in the sever, and get back its solution later on.  
 
 ## Technique
-A stack of technique is applied in this project. It includes **Spring Boot 1.5, Hibernate-JPA, Java 8, Derby(memory database), PostgreSql database, Heroku as PaaS, Maven, Git**. 
+A stack of technique are applied, i.e. **Spring Boot 1.5, Hibernate-JPA, Java 8, Derby(memory database), PostgreSql database, Heroku as PaaS, Maven, Git**. 
 
 ## Architect
-Code was built in following structure, from bottom to the top: 
+Code has a such a structure, from bottom to the top: 
 **database(derby for dev., postgresql for cloud) -> entities and data model-> repository(DAO) -> service(business logic) -> controller(http request handler) **
 
-User post its task via API. System feedback by htttp accepted status, meanwhile spawning a new thread to do heavy job. As the job done, the solution is inserted in to database, and waitting for user to retreive it. 
+## Concept
+User post its task via API. System feedback a htttp accepted status, meanwhile spawning a new thread to do the heavy job. As the job done, the solution is inserted in to database, waitting for user to retreive it. 
 
 ## Deployment
-Cloud: https://knapsacksolver.herokuapp.com/   
+Cloud: https://knapsacksolver.herokuapp.com/   
+Project jar file is deployed on the Cloud via Heroku CLI using github. 
+
 or 
 Local: http://localhost:8080
+running on Tomcat sever
 
 ## Security
-API is secured by the Spring Security module, with user: "test" and password: "test"
+API is secured by the Spring Security, with user: "test" and password: "test"
 
 ## Testing 
-Unit test: Spring Intergration test using Mocked MVC. It includes an emabeded memory database, and a mocked application server.
+Unit test: Spring Intergration test with Mocked MVC. It includes an emabeded memory database, and a mocked application server.
 It is presented in the code, test package. 
 And/OR: 
 Real life test: using Postman to invoke APIs. 
