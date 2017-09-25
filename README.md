@@ -57,8 +57,16 @@ task: JAVA util UUID String ; achieved when posting a task
 
 for instance: https://knapsacksolver.herokuapp.com/knapsack/solutions/0964614d-b8fb-450e-9abd-fcace74dabe9
 
-
 ![image](https://user-images.githubusercontent.com/17804600/30818261-612d2906-a21b-11e7-982f-f40fc7c59814.png)
+
+### Get tasks classified by status (http Get method)
+URI https://knapsacksolver.herokuapp.com/knapsack/admin/tasks
+
+return all tasks classified by their status. 
+
+for instance
+
+![image](https://user-images.githubusercontent.com/17804600/30820429-296efeca-a222-11e7-88d4-dd499490faea.png)
 
 
 
