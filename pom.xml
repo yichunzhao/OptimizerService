@@ -40,7 +40,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        
+        <!--dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency-->
 
         <!--dependency>
             <groupId>org.apache.derby</groupId>
@@ -53,6 +58,11 @@
             <artifactId>derbyclient</artifactId>
             <version>10.13.1.1</version>
             <scope>runtime</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
         </dependency>
         
         <dependency>
@@ -74,11 +84,6 @@
             <optional>true</optional>
         </dependency>
         
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
         
         <dependency>
             <groupId>org.springframework.restdocs</groupId>
@@ -98,7 +103,6 @@
             <version>v2015-09</version>
             <type>jar</type>
         </dependency>
-
         
     </dependencies>
     <repositories>
