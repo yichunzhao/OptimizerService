@@ -24,20 +24,22 @@ And/OR:
 Real life test: using Postman to invoke APIs. 
 
 ## APIs
-Create a task in the sever to calculte
+### Create a task in the sever to calculte
 URI: http://localhost:8080/knapsack/tasks
 
 Request body: {"capacity":60,"weights":[50,10,20,40,30],"prices":[300,60,90,100,240]}
 
-Basci Auth: user: "test"; password: "test"
+Basic Auth.: user: "test"; password: "test"
 
 ![image](https://user-images.githubusercontent.com/17804600/30811114-8729fdaa-a207-11e7-9a3d-ba63dea7ea3f.png)
 
 
 
 
-Get a task by id
-https://knapsacksolver.herokuapp.com/knapsack/tasks/1
+### Get a task by id
+URI https://knapsacksolver.herokuapp.com/knapsack/tasks/1
+
+
 
 
 
