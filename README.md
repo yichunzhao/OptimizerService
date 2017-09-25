@@ -5,10 +5,15 @@ The project is to build a Rest-API for solving knacksnack problem. The job is ca
 It means that a client may post its task in the sever, and get back its solution later on.  
 
 ## Technique
-A stack of technique are applied, i.e. **Spring Boot 1.5, Hibernate-JPA, Java 8, Derby(memory database), PostgreSql database, Heroku as PaaS, Maven, Git**. 
+Techniques are applied, i.e. **Spring Boot 1.5, Hibernate-JPA, Java 8, Derby(memory database), PostgreSql database, Heroku as PaaS, Maven, Git**. 
+
+## Knapsack Algorithm
+[Java Program to Implement Knapsack Algorithm](http://www.sanfoundry.com/java-program-knapsack-algorithm/)
+
+I slightly change the code to fit my code. 
 
 ## Architect
-Code has a such a structure, from bottom to the top: 
+From bottom to top, code follows a structure, i.e.
 **database(derby for dev., postgresql for cloud) -> entities and data model-> repository(DAO) -> service(business logic) -> controller(http request handler) **
 
 ## Concept
