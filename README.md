@@ -51,10 +51,12 @@ id : Long ; task id.
 
 ### Get back a solution ref. to task String (http Get method)
 URI https://knapsacksolver.herokuapp.com/knapsack/solutions/task
-task: String ; task String achieved when posting a task
+task: JAVA util UUID String ; achieved when posting a task
+
 for instance: https://knapsacksolver.herokuapp.com/knapsack/solutions/0964614d-b8fb-450e-9abd-fcace74dabe9
 
 
+![image](https://user-images.githubusercontent.com/17804600/30818261-612d2906-a21b-11e7-982f-f40fc7c59814.png)
 
 
 
