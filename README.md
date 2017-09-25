@@ -24,6 +24,8 @@ User post its task via API. System feedback a http accepted status, meanwhile sp
 Cloud: https://knapsacksolver.herokuapp.com/   
 Project jar file is deployed on the Cloud via Heroku CLI using git command. 
 
+The cloud server is totally free, so it will fall in idle as having no request. You need to wait a while as to wake it up. 
+
 or 
 Local: http://localhost:8080
 running on Tomcat sever
