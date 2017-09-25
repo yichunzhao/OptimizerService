@@ -10,7 +10,6 @@ import com.ynz.optimizer.model.Solution;
 import com.ynz.optimizer.model.Status;
 import com.ynz.optimizer.model.Task;
 import com.ynz.optimizer.model.Tasks;
-import com.ynz.optimizer.model.Test;
 import com.ynz.optimizer.model.Timestamps;
 import com.ynz.optimizer.repository.SolutionRepository;
 import com.ynz.optimizer.repository.TaskRepository;
@@ -45,15 +44,6 @@ public class SolverController {
 
     @Autowired
     private SolutionRepository solutionRepository;
-
-    @RequestMapping(value = "/knapsack/tasks/test", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity testCreate(@RequestBody Test test) {
-        if (test.getGoal() == null) {
-            return new ResponseEntity("Empty problem", HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity(test, HttpStatus.OK);
-    }
 
     @RequestMapping(value = "/knapsack/tasks", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity create(@RequestBody Problem problem) {
@@ -112,10 +102,16 @@ public class SolverController {
         return new ResponseEntity(task, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/knapsack/admin/shutdown", method = RequestMethod.POST)
-    public ResponseEntity shutdown() {
+    @RequestMapping(value = "/knapsack/tasks/{id}", method = RequestMethod.GET)
+    public ResponseEntity checkTask(@PathVariable("id") Long id) {
 
-        return new ResponseEntity("Shut down ", HttpStatus.OK);
+        Task found = taskRepository.findOne(id);
+
+        if (found == null) {
+            return new ResponseEntity("not existed", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity(found, HttpStatus.FOUND);
     }
 
     @RequestMapping(value = "/knapsack/solutions/{id}", method = RequestMethod.GET)
@@ -134,20 +130,26 @@ public class SolverController {
     @RequestMapping(value = "/knapsack/admin/tasks", method = RequestMethod.GET)
     public ResponseEntity getTask() {
         Tasks tasks = new Tasks();
-        
+
         List<Task> startedTasks = new ArrayList<>();
         taskRepository.findByStatus(Status.STARTED).forEach(startedTasks::add);
         tasks.setStarted(startedTasks);
-        
+
         List<Task> submittedTasks = new ArrayList<>();
-        taskRepository.findByStatus(Status.STARTED).forEach(submittedTasks::add);
+        taskRepository.findByStatus(Status.SUBMITTED).forEach(submittedTasks::add);
         tasks.setStarted(submittedTasks);
-        
+
         List<Task> completedTasks = new ArrayList<>();
-        taskRepository.findByStatus(Status.STARTED).forEach(completedTasks::add);
+        taskRepository.findByStatus(Status.COMPLETED).forEach(completedTasks::add);
         tasks.setStarted(completedTasks);
-                
+
         return new ResponseEntity(tasks, HttpStatus.FOUND);
+    }
+
+    @RequestMapping(value = "/knapsack/admin/shutdown", method = RequestMethod.POST)
+    public ResponseEntity shutdown() {
+
+        return new ResponseEntity("Shut down ", HttpStatus.OK);
     }
 
 }
