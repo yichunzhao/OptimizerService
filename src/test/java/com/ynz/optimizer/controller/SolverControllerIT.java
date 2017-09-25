@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 /**
@@ -52,6 +53,7 @@ public class SolverControllerIT {
         Problem problem = new Problem(capacity, weights, values);
 
         this.mvc.perform(post(PATH_CREATE)
+                .with(user("test").password("test").roles("test"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(problem)))
                 .andDo(print())
@@ -69,27 +71,27 @@ public class SolverControllerIT {
 
     @Test
     public void testCheckTask() throws Exception {
-        this.mvc.perform(get(PATH_CHECKTASK + "1"))
+        this.mvc.perform(get(PATH_CHECKTASK + "1").with(user("test").password("test").roles("test")))
                 .andExpect(status().isFound())
                 .andExpect(content().string(containsString("timestamps")));
     }
 
     @Test
     public void testCheckTask_NotFound() throws Exception {
-        this.mvc.perform(get(PATH_CHECKTASK + "2"))
+        this.mvc.perform(get(PATH_CHECKTASK + "2").with(user("test").password("test").roles("test")))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(containsString("not existed")));
     }
 
     @Test
     public void testGetSolution() throws Exception {
-        this.mvc.perform(get(PATH_GETSOLUTION + "1"))
+        this.mvc.perform(get(PATH_GETSOLUTION + "1").with(user("test").password("test").roles("test")))
                 .andExpect(status().isFound());
     }
 
     @Test
     public void testGetSolution_NotFound() throws Exception {
-        this.mvc.perform(get(PATH_GETSOLUTION + "2"))
+        this.mvc.perform(get(PATH_GETSOLUTION + "2").with(user("test").password("test").roles("test")))
                 .andExpect(status().isNotFound());
     }
 
