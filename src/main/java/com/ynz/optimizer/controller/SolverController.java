@@ -138,11 +138,11 @@ public class SolverController {
 
         List<Task> submittedTasks = new ArrayList<>();
         taskRepository.findByStatus(Status.SUBMITTED).forEach(submittedTasks::add);
-        tasks.setStarted(submittedTasks);
+        tasks.setSubmitted(submittedTasks);
 
         List<Task> completedTasks = new ArrayList<>();
         taskRepository.findByStatus(Status.COMPLETED).forEach(completedTasks::add);
-        tasks.setStarted(completedTasks);
+        tasks.setCompleted(completedTasks);
 
         return new ResponseEntity(tasks, HttpStatus.FOUND);
     }
