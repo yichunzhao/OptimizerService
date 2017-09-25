@@ -114,11 +114,12 @@ public class SolverController {
         return new ResponseEntity(found, HttpStatus.FOUND);
     }
 
-    @RequestMapping(value = "/knapsack/solutions/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/knapsack/solutions/{task}", method = RequestMethod.GET)
     public ResponseEntity getSolution(
-            @PathVariable("id") Long id) {
+            @PathVariable("task") String task) {
 
-        Solution found = solutionRepository.findOne(id);
+        //Solution found = solutionRepository.findOne(id);
+        Solution found = solutionRepository.findByTask(task);
 
         if (found == null) {
             return new ResponseEntity("not existed", HttpStatus.NOT_FOUND);
