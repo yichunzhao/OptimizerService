@@ -8,9 +8,7 @@ It means that a client may post its task in the sever, and get back its solution
 Techniques are applied, i.e. **Spring Boot 1.5, Hibernate-JPA, Java 8, Derby(memory database), PostgreSql database, Heroku as PaaS, Maven, Git**. 
 
 ## Knapsack Algorithm
-[Java Program to Implement Knapsack Algorithm](http://www.sanfoundry.com/java-program-knapsack-algorithm/)
-
-I slightly change the code to fit my code. 
+I slightly changed [Java Program to Implement Knapsack Algorithm](http://www.sanfoundry.com/java-program-knapsack-algorithm/), so that it fits into the project. 
 
 ## Architect
 From bottom to top, code follows a structure, i.e.
