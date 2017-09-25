@@ -1,7 +1,7 @@
 # OptimizerService
 
 ## Problem
-The project is to build a Rest-API for solving knacksnack problem. The job is carried out in an asynchronouse communication.
+The project is to build a Rest-API for solving knacksnack problem. The job is carried out in an asynchronous communication.
 It means that a client may post its task in the sever, and get back its solution later on.  
 
 ## Technique
@@ -11,14 +11,14 @@ Techniques are applied, i.e. **Spring Boot 1.5, Hibernate-JPA, Java 8, Derby(mem
 I slightly changed [Java Program to Implement Knapsack Algorithm](http://www.sanfoundry.com/java-program-knapsack-algorithm/), so that it fits into the project. 
 
 *The reason why I didn't use Google solver:* 
-1) It is not included in the Maven repository 2) I found it in a third party repository, and its maven dependency; however, it can not be included in both compling and runtime scope. Google solver constains dll file for interfacing with Java, which is required in runtime. 3) I believe it has a solution in somewhere, but I can't stuck here right now. So, I decide to take the current solution. 
+1) It is not included in the Maven repository 2) I found it in a third party repository, and its Maven dependency; however, it can not be included in both 1. compiling and runtime scope. Google solver contains dll file for interfacing with Java, which is required in runtime. 3) I believe it has a solution in somewhere, but I can't stuck here right now. So, I decide to take the current solution. 
 
 ## Architect
 From bottom to top, code follows a structure, i.e.
 database(derby for dev., postgresql for cloud) -> entities and data model-> repository(DAO) -> service(business logic) -> controller(http request handler)
 
 ## Concept
-User post its task via API. System feedback a htttp accepted status, meanwhile spawning a new thread to do the heavy job. As the job done, the solution is inserted in to database, waitting for user to retreive it. 
+User post its task via API. System feedback a http accepted status, meanwhile spawning a new thread to do the heavy job. As the job done, the solution is inserted in to database, waiting for user to retrieve it. 
 
 ## Deployment
 Cloud: https://knapsacksolver.herokuapp.com/   
@@ -32,7 +32,7 @@ running on Tomcat sever
 API is secured by the Spring Security, with user: "test" and password: "test"
 
 ## Testing 
-Unit test: Spring Intergration test with Mocked MVC. It includes an emabeded memory database, and a mocked application server.
+Unit test: Spring Integration test with Mocked MVC. It includes an embedded memory database, and a mocked application server.
 It is presented in the code, test package. 
 And/OR: 
 Real life test: using Postman to invoke APIs. 
