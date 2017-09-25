@@ -10,8 +10,8 @@ Techniques are applied, i.e. **Spring Boot 1.5, Hibernate-JPA, Java 8, Derby(mem
 ## Knapsack Algorithm
 I slightly changed [Java Program to Implement Knapsack Algorithm](http://www.sanfoundry.com/java-program-knapsack-algorithm/), so that it fits into the project. 
 
-*The reason why I didn't use Google solver: 
-1) It is not included in the Maven repository 2) I found it in a third party repository, and its maven dependency; however, it can not be included in both compling and runtime scope. Google solver constains dll file for interfacing with Java, which is required in runtime. 3) I believe it has a solution in somewhere, but I can't stuck here right now. So, I decide to take the current solution.* 
+*The reason why I didn't use Google solver:* 
+1) It is not included in the Maven repository 2) I found it in a third party repository, and its maven dependency; however, it can not be included in both compling and runtime scope. Google solver constains dll file for interfacing with Java, which is required in runtime. 3) I believe it has a solution in somewhere, but I can't stuck here right now. So, I decide to take the current solution. 
 
 ## Architect
 From bottom to top, code follows a structure, i.e.
