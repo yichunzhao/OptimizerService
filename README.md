@@ -43,9 +43,17 @@ Basic Auth.: user: "test"; password: "test"
 
 
 ### Check a task status by task id (http Get method)
-URI https://knapsacksolver.herokuapp.com/knapsack/tasks/2
+URI https://knapsacksolver.herokuapp.com/knapsack/tasks/id
+id : Long ; task id.
 
 ![image](https://user-images.githubusercontent.com/17804600/30812301-b4d9ff9a-a20a-11e7-906c-cf2a413cf9ce.png)
+
+
+### Get back a solution ref. to task String (http Get method)
+URI https://knapsacksolver.herokuapp.com/knapsack/solutions/task
+task: String ; task String achieved when posting a task
+for instance: https://knapsacksolver.herokuapp.com/knapsack/solutions/0964614d-b8fb-450e-9abd-fcace74dabe9
+
 
 
 
