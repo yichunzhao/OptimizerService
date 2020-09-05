@@ -7,9 +7,6 @@ It means that a client may post its task in the sever, and get back its solution
 ## Knapsack Algorithm
 I slightly changed [Java Program to Implement Knapsack Algorithm](http://www.sanfoundry.com/java-program-knapsack-algorithm/), so that it fits into the project. 
 
-## Architect
-From bottom to top, code follows a structure, i.e.
-database(derby for dev., postgresql for cloud) -> entities and data model-> repository(DAO) -> service(business logic) -> controller(http request handler)
 
 ## Concept
 User post its task via API. System feedback a http accepted status, meanwhile spawning a new thread to do the heavy job. As the job done, the solution is inserted in to database, waiting for user to retrieve it. 
