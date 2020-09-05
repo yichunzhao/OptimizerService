@@ -14,10 +14,6 @@ import com.ynz.optimizer.model.Timestamps;
 import com.ynz.optimizer.repository.SolutionRepository;
 import com.ynz.optimizer.repository.TaskRepository;
 import com.ynz.optimizer.util.Knapsack;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +26,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 /**
- *
  * @author YNZ
  */
 @RestController
@@ -105,9 +106,9 @@ public class SolverController {
     @RequestMapping(value = "/knapsack/tasks/{id}", method = RequestMethod.GET)
     public ResponseEntity checkTask(@PathVariable("id") Long id) {
 
-        Task found = taskRepository.findOne(id);
+        Optional<Task> found = taskRepository.findById(id);
 
-        if (found == null) {
+        if (!found.isPresent()) {
             return new ResponseEntity("not existed", HttpStatus.NOT_FOUND);
         }
 

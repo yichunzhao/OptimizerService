@@ -32,12 +32,7 @@ public class UserRepositoryIT {
         user = new Client("user", "user", "user"); //"user","user","user"
     }
 
-    @Test
-    public void testSave() {
-        Client added = repository.save(user);
-        Client found = repository.findOne(added.getId());
-        Assert.assertEquals(user.getUserRole(), found.getUserRole());
-    }
+
     
     @Test
     public void testFindByUserName(){
